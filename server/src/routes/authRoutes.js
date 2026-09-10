@@ -1,0 +1,17 @@
+import { Router } from "express";
+import { changePassword, forgotPassword, login, logout, profile, register, resendOtp, resetPassword, verifyEmail } from "../controllers/authController.js";
+import { bridgeClerkSession } from "../controllers/clerkBridgeController.js";
+import { protect } from "../middleware/auth.js";
+import { requireFields, validateEmail, validatePassword } from "../middleware/validate.js";
+const router = Router();
+router.post("/register", requireFields("name", "email", "password"), validateEmail, validatePassword, register);
+router.post("/login", requireFields("email", "password"), validateEmail, validatePassword, login);
+router.post("/clerk", bridgeClerkSession);
+router.post("/logout", logout);
+router.get("/profile", protect, profile);
+router.post("/verify-email", requireFields("email", "otp"), validateEmail, verifyEmail);
+router.post("/resend-otp", requireFields("email"), validateEmail, resendOtp);
+router.post("/forgot-password", requireFields("email"), validateEmail, forgotPassword);
+router.post("/reset-password", requireFields("email", "otp", "password"), validateEmail, validatePassword, resetPassword);
+router.patch("/change-password", protect, requireFields("currentPassword", "newPassword"), changePassword);
+export default router;

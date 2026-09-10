@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { addToCart, clearCart, getCart, removeCartItem, updateCartItem } from "../controllers/cartController.js";
+import { protect } from "../middleware/auth.js";
+import { requireFields } from "../middleware/validate.js";
+const router = Router();
+router.use(protect);
+router.get("/", getCart);
+router.post("/items", requireFields("productId", "quantity"), addToCart);
+router.put("/items/:productId", requireFields("quantity"), updateCartItem);
+router.delete("/items/:productId", removeCartItem);
+router.delete("/", clearCart);
+export default router;

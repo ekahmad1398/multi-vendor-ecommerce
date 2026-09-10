@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { createCategory, deleteCategory, getCategories, updateCategory } from "../controllers/categoryController.js";
+import { adminOnly, protect } from "../middleware/auth.js";
+import { requireFields } from "../middleware/validate.js";
+const router = Router();
+router.get("/", getCategories);
+router.post("/", protect, adminOnly, requireFields("name"), createCategory);
+router.put("/:id", protect, adminOnly, updateCategory);
+router.delete("/:id", protect, adminOnly, deleteCategory);
+export default router;

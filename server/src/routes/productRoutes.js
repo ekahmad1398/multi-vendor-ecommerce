@@ -1,0 +1,15 @@
+import { Router } from "express";
+import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } from "../controllers/productController.js";
+import { adminOnly, protect, sellerOnly } from "../middleware/auth.js";
+import { requireFields } from "../middleware/validate.js";
+import { createReview, getProductReviews } from "../controllers/reviewController.js";
+import upload from "../middleware/upload.js";
+const router = Router();
+router.get("/", getProducts);
+router.get("/:id/reviews", getProductReviews);
+router.post("/:id/reviews", protect, createReview);
+router.get("/:id", getProduct);
+router.post("/", protect, (req,res,next)=>req.user.role === "admin" ? next() : sellerOnly(req,res,next), upload.array("images", 6), createProduct);
+router.put("/:id", protect, (req,res,next)=>req.user.role === "admin" ? next() : sellerOnly(req,res,next), upload.array("images", 6), updateProduct);
+router.delete("/:id", protect, (req,res,next)=>req.user.role === "admin" ? next() : sellerOnly(req,res,next), deleteProduct);
+export default router;

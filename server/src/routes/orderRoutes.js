@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { cancelMyOrder, createOrder, getAdminStats, getAllOrders, getMyOrder, getMyOrders, updateOrderStatus } from "../controllers/orderController.js";
+import { adminOnly, protect } from "../middleware/auth.js";
+const router = Router();
+router.use(protect);
+router.post("/", createOrder);
+router.get("/my", getMyOrders);
+router.get("/my/:id", getMyOrder);
+router.patch("/my/:id/cancel", cancelMyOrder);
+router.get("/admin/stats", adminOnly, getAdminStats);
+router.get("/", adminOnly, getAllOrders);
+router.patch("/:id/status", adminOnly, updateOrderStatus);
+export default router;
