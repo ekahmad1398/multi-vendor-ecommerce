@@ -1,30 +1,41 @@
-# E-Commerce Project
+# Multi-Vendor E-Commerce
 
-Simple Node.js, Express, MongoDB e-commerce API with JWT authentication, email OTPs, products, carts, and orders.
+Full-stack e-commerce application with a Next.js frontend and an Express/MongoDB API.
 
 ## Project Structure
 
-- `client/`: Frontend application workspace.
-- `server/`: Backend application workspace.
-- `server/src/config/`: Application and environment configuration.
-- `server/src/controllers/`: Request-handling layer.
-- `server/src/middleware/`: Express middleware.
-- `server/src/models/`: Mongoose data models.
-- `server/src/routes/`: Express route definitions.
-- `server/src/services/`: Application service layer.
-- `server/src/utils/`: Shared backend utilities.
-- `server/src/app.js`: Express application setup entry point.
-- `server/server.js`: Backend process entry point.
-- `server/.env`: Local environment variables; keep this file out of version control.
-- `server/.gitignore`: Backend-specific ignored files.
-- `server/package.json`: Backend package metadata and dependencies.
-- `.gitignore`: Repository-wide ignored files.
-- `README.md`: Project documentation.
+- `client/`: Next.js frontend.
+- `server/`: Express API, authentication, MongoDB models, uploads, and email services.
 
-## Setup
+## Local Setup
 
-1. In `server`, copy `.env.example` to `.env` and fill in MongoDB, JWT, and Mailtrap values.
-2. Run `npm install` and `npm run dev` from `server`.
-3. Use `Authorization: Bearer <token>` for protected endpoints.
+1. Install dependencies in both workspaces:
 
-Public routes include `GET /api/products`, `GET /api/categories`, and the authentication routes under `/api/auth`. Product search supports `keyword`, `category`, `minPrice`, `maxPrice`, `page`, and `limit` query parameters. The first admin user must be set deliberately in MongoDB by changing its `role` to `admin`; public registration never creates an administrator.
+	```bash
+	npm install --prefix server
+	npm install --prefix client
+	```
+
+2. Copy `server/.env.example` to `server/.env` and fill in the required values.
+3. Create `client/.env.local` with:
+
+	```env
+	NEXT_PUBLIC_API_URL=http://localhost:30001/api
+	NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+	```
+
+4. Start the API and frontend in separate terminals:
+
+	```bash
+	npm run dev --prefix server
+	npm run dev --prefix client
+	```
+
+## Deployment
+
+- Deploy `client` as a Vercel project with `client` as its Root Directory.
+- Set `NEXT_PUBLIC_API_URL` to the deployed API URL ending in `/api`.
+- Deploy `server` separately as a Node.js service. Set `CLIENT_URL` to the Vercel URL and configure all variables from `server/.env.example` in the hosting provider.
+- Never commit `.env`, `.env.local`, database credentials, JWT secrets, or Cloudinary secrets.
+
+Public routes include `GET /api/products`, `GET /api/categories`, and authentication routes under `/api/auth`. Product search supports `keyword`, `category`, `minPrice`, `maxPrice`, `page`, and `limit` query parameters.
