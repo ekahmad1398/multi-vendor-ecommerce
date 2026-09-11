@@ -11,5 +11,12 @@ export const sendEmail = async ({ to, subject, text, html }) => {
   // Mailtrap's API transport authenticates with an API token instead of SMTP host/user/password.
   const transporter = nodemailer.createTransport(MailtrapTransport({ token: MAILTRAP_TOKEN }));
   const sender = { address: MAIL_FROM, name: MAIL_FROM_NAME || "E-Commerce API" };
-  await transporter.sendMail({ from: sender, to, subject, text, html });
+  try {
+    await transporter.sendMail({ from: sender, to, subject, text, html });
+  } catch (error) {
+    // Provider SDK errors do not carry a safe HTTP status by default, which
+    // previously surfaced to the storefront as an unhelpful 500 response.
+    console.error(`Email delivery failed: ${error.message}`);
+    throw new AppError("Email delivery is temporarily unavailable. Please try again shortly.", 502);
+  }
 };
