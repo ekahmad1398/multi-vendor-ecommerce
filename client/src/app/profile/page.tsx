@@ -3,13 +3,11 @@
 import Link from "next/link";
 import { Heart, Package, ShieldCheck, Store, UserRound } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useUser } from "@clerk/nextjs";
 import { getBackendProfile } from "@/services/auth";
 import { ErrorState, PageHeader } from "@/components/ui/primitives";
 import { Badge } from "@/components/ui/primitives";
 
 export default function Profile() {
-  const { user } = useUser();
   const profile = useQuery({ queryKey: ["backend-profile"], queryFn: getBackendProfile, retry: false });
 
   if (profile.isLoading) return <div className="shell py-12"><div className="h-64 animate-pulse rounded-2xl bg-stone-100" /></div>;
@@ -47,9 +45,7 @@ export default function Profile() {
             {account.role === "seller" && account.sellerStatus && <Badge tone={account.sellerStatus === "active" ? "green" : "red"}>{account.sellerStatus}</Badge>}
           </div>
           <p className="mt-2 text-sm text-slate-500">{account.email}</p>
-          {user?.primaryEmailAddress?.emailAddress && user.primaryEmailAddress.emailAddress !== account.email && (
-            <p className="mt-1 text-xs text-slate-400">Signed in with Clerk as {user.primaryEmailAddress.emailAddress}</p>
-          )}
+          <p className="mt-1 text-xs text-slate-400">Signed in with your Morrow account</p>
         </div>
       </section>
       <div className="mt-6 grid gap-4 md:grid-cols-3">

@@ -1,9 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignInPanel } from "@/components/auth/auth-panel";
 
 export default function SignInPage() {
-  return (
-    <div className="shell grid min-h-[70vh] place-items-center py-12">
-      <SignIn routing="path" path="/sign-in" signUpUrl="/sign-up" fallbackRedirectUrl="/" />
-    </div>
-  );
+  return <SignInPanel />;
 }

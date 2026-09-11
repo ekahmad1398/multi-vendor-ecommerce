@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@clerk/nextjs";
+import { useLocalAuth } from "@/components/auth/local-auth-provider";
 import { getProduct, getProducts } from "@/services/catalog";
 import { addCartItem } from "@/services/cart";
 import { addToWishlist, getWishlist, removeFromWishlist } from "@/services/wishlist";
@@ -17,7 +17,7 @@ import Link from "next/link";
 
 export function ProductDetail({ id }: { id: string }) {
   const client = useQueryClient();
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useLocalAuth();
   const productQuery = useQuery({ queryKey: ["product", id], queryFn: () => getProduct(id), retry: false });
   const reviews = useQuery({ queryKey: ["reviews", id], queryFn: () => getReviews(id) });
   const profile = useQuery({ queryKey: ["backend-profile"], queryFn: getBackendProfile, enabled: Boolean(isSignedIn), retry: false });

@@ -5,7 +5,7 @@ import { Heart, ShoppingBag, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@clerk/nextjs";
+import { useLocalAuth } from "@/components/auth/local-auth-provider";
 import type { Category, Product } from "@/types";
 import { addCartItem } from "@/services/cart";
 import { addToWishlist, getWishlist, removeFromWishlist } from "@/services/wishlist";
@@ -23,7 +23,7 @@ export function ProductGrid({ products }: { products: Product[] }) {
 
 export function ProductCard({ product }: { product: Product }) {
   const queryClient = useQueryClient();
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useLocalAuth();
   const wishlist = useQuery({
     queryKey: ["wishlist"],
     queryFn: getWishlist,

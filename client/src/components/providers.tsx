@@ -1,13 +1,12 @@
 "use client";
 
-import { ClerkProvider } from "@clerk/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { useState } from "react";
 import { Toaster } from "sonner";
 import { store } from "@/store";
-import { ClerkBridge } from "@/components/auth/clerk-bridge";
 import { CartHydrator } from "@/components/cart/cart-hydrator";
+import { LocalAuthProvider } from "@/components/auth/local-auth-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = useState(
@@ -15,15 +14,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <ClerkProvider>
-      <QueryClientProvider client={client}>
+    <QueryClientProvider client={client}>
+      <LocalAuthProvider>
         <Provider store={store}>
-          <ClerkBridge />
           <CartHydrator />
           {children}
           <Toaster richColors position="top-right" />
         </Provider>
-      </QueryClientProvider>
-    </ClerkProvider>
+      </LocalAuthProvider>
+    </QueryClientProvider>
   );
 }

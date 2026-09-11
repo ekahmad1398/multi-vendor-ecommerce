@@ -20,6 +20,16 @@ body {
   font-family: var(--font-geist-sans), sans-serif;
 }
 
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.65;
+  background: radial-gradient(circle at 8% 15%, #f8e1c0 0, transparent 18%), radial-gradient(circle at 95% 68%, #dbe8da 0, transparent 20%);
+}
+
 button,
 a,
 input,
@@ -42,6 +52,14 @@ textarea {
   background:
     radial-gradient(circle at 88% 8%, #fbe7c5 0, transparent 28%),
     linear-gradient(160deg, #fffaf3 0%, #f4efe7 55%, #ece8e1 100%);
+}
+
+.auth-card {
+  border: 1px solid rgb(255 255 255 / 0.75);
+  border-radius: 1.75rem;
+  background: rgb(255 254 250 / 0.82);
+  box-shadow: 0 24px 70px rgb(69 48 22 / 0.12), 0 2px 5px rgb(23 32 51 / 0.05);
+  backdrop-filter: blur(18px);
 }
 
 .eyebrow {

@@ -2,13 +2,13 @@
 
 import { getCart } from "@/services/cart";
 import { setItemCount } from "@/store/slices/cart-slice";
-import { useUser } from "@clerk/nextjs";
+import { useLocalAuth } from "@/components/auth/local-auth-provider";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export function CartHydrator() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useLocalAuth();
   const dispatch = useDispatch();
   const cart = useQuery({
     queryKey: ["cart"],
