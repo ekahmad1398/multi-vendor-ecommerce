@@ -15,8 +15,8 @@ html {
 
 body {
   min-height: 100vh;
-  background: #faf7f2;
-  color: #172033;
+  background: #f7f7f4;
+  color: #111827;
   font-family: var(--font-geist-sans), sans-serif;
 }
 
@@ -26,8 +26,8 @@ body::before {
   inset: 0;
   content: "";
   pointer-events: none;
-  opacity: 0.65;
-  background: radial-gradient(circle at 8% 15%, #f8e1c0 0, transparent 18%), radial-gradient(circle at 95% 68%, #dbe8da 0, transparent 20%);
+  opacity: 0.82;
+  background: radial-gradient(circle at 7% 4%, #d9ffb8 0, transparent 16%), radial-gradient(circle at 96% 29%, #fcd2b0 0, transparent 18%);
 }
 
 button,
@@ -48,11 +48,7 @@ textarea {
   margin-inline: auto;
 }
 
-.hero {
-  background:
-    radial-gradient(circle at 88% 8%, #fbe7c5 0, transparent 28%),
-    linear-gradient(160deg, #fffaf3 0%, #f4efe7 55%, #ece8e1 100%);
-}
+.hero { background: #151b29; }
 
 .auth-card {
   border: 1px solid rgb(255 255 255 / 0.75);
@@ -61,6 +57,13 @@ textarea {
   box-shadow: 0 24px 70px rgb(69 48 22 / 0.12), 0 2px 5px rgb(23 32 51 / 0.05);
   backdrop-filter: blur(18px);
 }
+
+.hero-orb { position: absolute; border-radius: 999px; filter: blur(1px); animation: drift 8s ease-in-out infinite alternate; }
+.hero-orb--one { height: 21rem; width: 21rem; right: 7%; top: -2rem; background: #d9ff6e; }
+.hero-orb--two { height: 14rem; width: 14rem; right: 33%; bottom: -5rem; background: #ff9f68; animation-delay: -3s; }
+.hero-orb--three { height: 9rem; width: 9rem; right: 12%; bottom: 19%; background: #9ae5df; animation-delay: -5s; }
+@keyframes drift { to { transform: translate3d(-15px, 20px, 0) scale(1.06); } }
+.hero-tile { background: linear-gradient(145deg, rgb(255 255 255 / 0.96), rgb(234 242 220 / 0.72)); box-shadow: 0 24px 70px rgb(0 0 0 / 0.24); }
 
 .eyebrow {
   color: #9a641e;
@@ -108,6 +111,7 @@ textarea {
 
 .btn-dark:hover {
   background: #2b3a52;
+  transform: translateY(-2px);
 }
 
 .btn-light {

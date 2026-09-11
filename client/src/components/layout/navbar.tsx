@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { useClerk } from "@clerk/nextjs";
 import type { RootState } from "@/store";
 import { useLocalAuth } from "@/components/auth/local-auth-provider";
 
@@ -15,9 +16,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const count = useSelector((s: RootState) => s.cart.itemCount);
   const { user, isSignedIn, signOut } = useLocalAuth();
+  const { signOut: clerkSignOut } = useClerk();
   const queryClient = useQueryClient(); const router = useRouter(); const path = usePathname();
   const close = () => setOpen(false);
-  const handleSignOut = async () => { await signOut(); queryClient.clear(); close(); router.push("/"); };
+  const handleSignOut = async () => { await signOut(); await clerkSignOut(); queryClient.clear(); close(); router.push("/"); };
   const seller = user?.role === "seller"; const admin = user?.role === "admin";
   return <header className="sticky top-0 z-40 border-b border-stone-200/80 bg-[#faf7f2]/90 backdrop-blur">
     <div className="shell flex h-16 items-center justify-between gap-4">
