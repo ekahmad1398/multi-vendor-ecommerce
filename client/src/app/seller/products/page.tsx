@@ -63,7 +63,7 @@ export default function SellerProducts() {
                   <td>{money(product.price)}</td>
                   <td>{product.stock}</td>
                   <td className="text-right">
-                    <Link className="text-amber-800" href={`/seller/products/${product._id}/edit`}>
+                    <Link className="text-violet-800" href={`/seller/products/${product._id}/edit`}>
                       Edit
                     </Link>
                     <button onClick={() => remove.mutate(product._id)} className="ml-4 text-rose-600">

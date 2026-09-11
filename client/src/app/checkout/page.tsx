@@ -12,7 +12,7 @@ export default function Checkout() {
   if (query.isLoading) {
     return (
       <div className="shell py-12">
-        <div className="h-96 animate-pulse rounded-2xl bg-stone-100" />
+        <div className="h-96 animate-pulse rounded-2xl bg-slate-100" />
       </div>
     );
   }
@@ -62,7 +62,7 @@ export default function Checkout() {
               </div>
             ))}
           </div>
-          <dl className="mt-6 space-y-3 border-t border-stone-200 pt-5 text-sm">
+          <dl className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-sm">
             <div className="flex justify-between">
               <dt className="text-slate-500">Subtotal</dt>
               <dd>{money(cart.subtotal)}</dd>
@@ -71,7 +71,7 @@ export default function Checkout() {
               <dt className="text-slate-500">Discount</dt>
               <dd className="text-emerald-700">-{money(cart.discount)}</dd>
             </div>
-            <div className="flex justify-between border-t border-stone-200 pt-4 text-lg font-semibold">
+            <div className="flex justify-between border-t border-slate-200 pt-4 text-lg font-semibold">
               <dt>Total</dt>
               <dd>{money(cart.total)}</dd>
             </div>

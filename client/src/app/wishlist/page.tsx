@@ -14,7 +14,7 @@ export default function Wishlist() {
       <PageHeader eyebrow="Saved for later" title="Your wishlist" description="Your personal edit of pieces worth returning to." />
       <div className="mt-8">
         {query.isLoading ? (
-          <div className="h-64 animate-pulse rounded-2xl bg-stone-100" />
+          <div className="h-64 animate-pulse rounded-2xl bg-slate-100" />
         ) : query.isError || !query.data ? (
           <ErrorState onRetry={() => query.refetch()} />
         ) : query.data.wishlist.products.length ? (

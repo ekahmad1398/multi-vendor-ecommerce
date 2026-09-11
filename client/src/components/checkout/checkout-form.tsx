@@ -84,7 +84,7 @@ export function CheckoutForm() {
         {field("country", "Country")}
         {field("postalCode", "Postal code (optional)")}
       </div>
-      <fieldset className="mt-8 border-t border-stone-200 pt-7">
+      <fieldset className="mt-8 border-t border-slate-200 pt-7">
         <legend className="font-serif text-2xl">Payment method</legend>
         <div className="mt-4 grid gap-3">
           {[
@@ -94,7 +94,7 @@ export function CheckoutForm() {
           ].map(([value, title, copy]) => (
             <label
               key={value}
-              className="flex cursor-pointer gap-3 rounded-xl border border-stone-200 p-4 has-[:checked]:border-amber-600 has-[:checked]:bg-amber-50"
+              className="flex cursor-pointer gap-3 rounded-xl border border-slate-200 p-4 has-[:checked]:border-violet-600 has-[:checked]:bg-violet-50"
             >
               <input type="radio" value={value} {...register("paymentMethod")} />
               <span>

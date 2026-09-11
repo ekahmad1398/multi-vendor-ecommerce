@@ -26,7 +26,7 @@ export default function Order() {
   if (query.isLoading) {
     return (
       <div className="shell py-12">
-        <div className="h-80 animate-pulse rounded-2xl bg-stone-100" />
+        <div className="h-80 animate-pulse rounded-2xl bg-slate-100" />
       </div>
     );
   }
@@ -58,7 +58,7 @@ export default function Order() {
         </div>
       </div>
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_330px]">
-        <section className="card divide-y divide-stone-100">
+        <section className="card divide-y divide-slate-100">
           {order.items.map((item) => (
             <div className="flex justify-between gap-4 p-5" key={item.product}>
               <div>

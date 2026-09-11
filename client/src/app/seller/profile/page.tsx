@@ -40,7 +40,7 @@ export default function SellerProfile() {
         </label>
         <label className="mt-4 block text-sm font-medium">
           Email
-          <input readOnly value={query.data.seller.email} className="input mt-2 bg-stone-100" />
+          <input readOnly value={query.data.seller.email} className="input mt-2 bg-slate-100" />
         </label>
         <p className="mt-4 flex items-center gap-2 text-sm text-slate-500">
           Status <Badge tone={statusTone(query.data.seller.sellerStatus)}>{query.data.seller.sellerStatus}</Badge>

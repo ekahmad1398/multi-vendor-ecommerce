@@ -17,7 +17,7 @@ const items = [
 export function SellerShell({ children }: { children: React.ReactNode }) {
   const query = useQuery({ queryKey: ["backend-profile"], queryFn: getBackendProfile, retry: false });
   const path = usePathname();
-  if (query.isLoading) return <div className="min-h-screen bg-slate-100" />;
+  if (query.isLoading) return <div className="workspace-shell" />;
   if (query.data?.role !== "seller") {
     return (
       <div className="shell py-16">
@@ -27,11 +27,11 @@ export function SellerShell({ children }: { children: React.ReactNode }) {
     );
   }
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="workspace-shell">
       <div className="mx-auto grid max-w-[90rem] lg:grid-cols-[240px_1fr]">
-        <aside className="bg-slate-950 p-5 text-slate-300 lg:min-h-screen">
+        <aside className="workspace-sidebar p-5 text-slate-300 lg:min-h-screen">
           <Link href="/seller" className="font-serif text-3xl text-white">
-            morrow<span className="text-amber-400">.</span>{" "}
+            morrow<span className="text-violet-400">.</span>{" "}
             <span className="font-sans text-xs uppercase tracking-widest text-slate-400">Seller</span>
           </Link>
           <nav className="mt-10 flex gap-2 overflow-x-auto lg:flex-col">

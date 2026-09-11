@@ -74,8 +74,8 @@ export function ProductDetail({ id }: { id: string }) {
   if (productQuery.isLoading) {
     return (
       <div className="shell grid gap-10 py-10 lg:grid-cols-2">
-        <div className="aspect-square animate-pulse rounded-3xl bg-stone-200" />
-        <div className="h-96 animate-pulse rounded-3xl bg-stone-100" />
+        <div className="aspect-square animate-pulse rounded-3xl bg-slate-200" />
+        <div className="h-96 animate-pulse rounded-3xl bg-slate-100" />
       </div>
     );
   }
@@ -105,11 +105,11 @@ export function ProductDetail({ id }: { id: string }) {
       </p>
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
         <div className="grid gap-3">
-          <div className="grid aspect-square place-items-center overflow-hidden rounded-[2rem] bg-stone-100">
+          <div className="grid aspect-square place-items-center overflow-hidden rounded-[2rem] bg-slate-100">
             {images[imageIndex] ? (
               <img src={images[imageIndex].url} alt={product.name} className="h-full w-full object-cover" />
             ) : (
-              <span className="font-serif text-8xl text-stone-400">M</span>
+              <span className="font-serif text-8xl text-slate-400">M</span>
             )}
           </div>
           {images.length > 1 && (
@@ -119,7 +119,7 @@ export function ProductDetail({ id }: { id: string }) {
                   key={`${image.url}-${index}`}
                   type="button"
                   onClick={() => setImageIndex(index)}
-                  className={`h-20 w-20 overflow-hidden rounded-xl border ${imageIndex === index ? "border-amber-700" : "border-transparent"}`}
+                  className={`h-20 w-20 overflow-hidden rounded-xl border ${imageIndex === index ? "border-violet-700" : "border-transparent"}`}
                 >
                   <img src={image.url} alt="" className="h-full w-full object-cover" />
                 </button>
@@ -131,7 +131,7 @@ export function ProductDetail({ id }: { id: string }) {
           <p className="eyebrow">{product.brand || product.category?.name || "Morrow"}</p>
           <h1 className="mt-2 font-serif text-5xl tracking-tight">{product.name}</h1>
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <Star size={16} className="fill-amber-500 text-amber-500" />
+            <Star size={16} className="fill-violet-500 text-violet-500" />
             {product.rating.toFixed(1)}
             <span className="text-slate-500">({product.reviewCount} reviews)</span>
           </div>
@@ -140,7 +140,7 @@ export function ProductDetail({ id }: { id: string }) {
             {product.discount > 0 && (
               <>
                 <p className="pb-1 text-slate-400 line-through">{money(product.price)}</p>
-                <span className="mb-1 rounded-full bg-amber-100 px-2 py-1 text-xs font-bold text-amber-800">
+                <span className="mb-1 rounded-full bg-violet-100 px-2 py-1 text-xs font-bold text-violet-800">
                   Save {product.discount}%
                 </span>
               </>
@@ -151,7 +151,7 @@ export function ProductDetail({ id }: { id: string }) {
           </p>
           {product.description && <p className="mt-6 max-w-lg leading-7 text-slate-600">{product.description}</p>}
           <div className="mt-8 flex gap-3">
-            <div className="flex items-center rounded-full border border-stone-300">
+            <div className="flex items-center rounded-full border border-slate-300">
               <button aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3">
                 <Minus size={16} />
               </button>
@@ -163,11 +163,11 @@ export function ProductDetail({ id }: { id: string }) {
             <Button disabled={!product.stock} loading={cart.isPending} onClick={() => cart.mutate()} className="btn-dark flex-1">
               <ShoppingBag size={17} /> Add to bag
             </Button>
-            <button onClick={() => wish.mutate()} aria-label="Toggle wishlist" className="icon border border-stone-300">
+            <button onClick={() => wish.mutate()} aria-label="Toggle wishlist" className="icon border border-slate-300">
               <Heart size={18} className={saved ? "fill-rose-600 text-rose-600" : ""} />
             </button>
           </div>
-          <dl className="mt-8 grid grid-cols-2 border-t border-stone-200 pt-6 text-sm">
+          <dl className="mt-8 grid grid-cols-2 border-t border-slate-200 pt-6 text-sm">
             <div>
               <dt className="text-slate-500">Category</dt>
               <dd className="mt-1 font-medium">{product.category?.name ?? "—"}</dd>
@@ -177,14 +177,14 @@ export function ProductDetail({ id }: { id: string }) {
               <dd className="mt-1 font-medium">{product.sku || "—"}</dd>
             </div>
           </dl>
-          <div className="mt-7 flex gap-3 border-t border-stone-200 pt-6 text-sm text-slate-600">
-            <Truck size={19} className="text-amber-700" />
+          <div className="mt-7 flex gap-3 border-t border-slate-200 pt-6 text-sm text-slate-600">
+            <Truck size={19} className="text-violet-700" />
             Delivery and returns are confirmed at checkout.
           </div>
         </div>
       </div>
 
-      <section className="mt-16 border-t border-stone-200 py-12">
+      <section className="mt-16 border-t border-slate-200 py-12">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Customer notes</p>
@@ -203,7 +203,7 @@ export function ProductDetail({ id }: { id: string }) {
             <div className="mt-3 flex gap-1">
               {[1, 2, 3, 4, 5].map((value) => (
                 <button type="button" key={value} onClick={() => setRating(value)} aria-label={`${value} stars`}>
-                  <Star size={20} className={value <= rating ? "fill-amber-500 text-amber-500" : "text-stone-300"} />
+                  <Star size={20} className={value <= rating ? "fill-violet-500 text-violet-500" : "text-slate-300"} />
                 </button>
               ))}
             </div>
@@ -219,12 +219,12 @@ export function ProductDetail({ id }: { id: string }) {
           </form>
         )}
         {reviews.isLoading ? (
-          <div className="h-28 animate-pulse rounded-2xl bg-stone-100" />
+          <div className="h-28 animate-pulse rounded-2xl bg-slate-100" />
         ) : reviews.data?.length ? (
           <div className="grid gap-4 md:grid-cols-3">
             {reviews.data.map((item) => (
               <article key={item._id} className="card p-5">
-                <div className="flex text-amber-500">{"★".repeat(item.rating)}</div>
+                <div className="flex text-violet-500">{"★".repeat(item.rating)}</div>
                 <p className="mt-4 text-sm leading-6 text-slate-600">{item.comment || "No written comment."}</p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <p className="text-sm font-medium">{item.user.name}</p>
@@ -243,7 +243,7 @@ export function ProductDetail({ id }: { id: string }) {
       </section>
 
       {others.length > 0 && (
-        <section className="border-t border-stone-200 py-12">
+        <section className="border-t border-slate-200 py-12">
           <div className="section-heading">
             <div>
               <p className="eyebrow">More like this</p>

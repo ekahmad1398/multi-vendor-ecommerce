@@ -107,12 +107,12 @@ export function ProductsCatalog() {
           <option value="3">3 stars and up</option>
         </select>
       </label>
-      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-xl border border-stone-200 p-3 text-sm font-medium">
+      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 p-3 text-sm font-medium">
         <input
           checked={inStock}
           onChange={(event) => setFilters({ stock: event.target.checked ? "in" : undefined })}
           type="checkbox"
-          className="accent-amber-700"
+          className="accent-violet-700"
         />
         In stock only
       </label>
@@ -135,7 +135,7 @@ export function ProductsCatalog() {
         title="Objects for everyday"
         description="Thoughtfully sourced goods from independent sellers, all in one considered collection."
       />
-      <div className="mt-8 flex flex-wrap gap-3 border-y border-stone-200 py-4">
+      <div className="mt-8 flex flex-wrap gap-3 border-y border-slate-200 py-4">
         <form
           className="relative min-w-56 flex-1"
           onSubmit={(event) => {
@@ -161,7 +161,7 @@ export function ProductsCatalog() {
           value={sort}
           onChange={(event) => setFilters({ sort: event.target.value })}
           aria-label="Sort products"
-          className="rounded-xl border border-stone-300 bg-white px-3 text-sm font-medium"
+          className="rounded-xl border border-slate-300 bg-white px-3 text-sm font-medium"
         >
           <option value="newest">Newest arrivals</option>
           <option value="popularity">Most popular</option>
@@ -174,7 +174,7 @@ export function ProductsCatalog() {
         <div className="filter-desktop">{panel}</div>
         {filtersOpen && (
           <div className="filter-drawer fixed inset-0 z-50 bg-slate-950/35 p-3">
-            <div className="ml-auto h-full max-w-sm overflow-auto rounded-2xl bg-[#faf7f2] p-4 shadow-2xl">{panel}</div>
+            <div className="ml-auto h-full max-w-sm overflow-auto rounded-2xl bg-white p-4 shadow-2xl">{panel}</div>
           </div>
         )}
         <section>

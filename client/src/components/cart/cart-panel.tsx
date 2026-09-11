@@ -34,7 +34,7 @@ export function CartPanel() {
     onError: (error: Error) => toast.error(error.message),
   });
 
-  if (query.isLoading) return <div className="card h-64 animate-pulse bg-stone-100" />;
+  if (query.isLoading) return <div className="card h-64 animate-pulse bg-slate-100" />;
   if (query.isError || !query.data) return <ErrorState onRetry={() => query.refetch()} />;
   const cart = query.data.cart;
   if (!cart.items.length) {
@@ -54,7 +54,7 @@ export function CartPanel() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
       <section className="card overflow-hidden">
-        <div className="flex items-center justify-between border-b border-stone-200 p-5">
+        <div className="flex items-center justify-between border-b border-slate-200 p-5">
           <h2 className="font-serif text-2xl">
             Your items <span className="text-base text-slate-500">({cart.items.length})</span>
           </h2>
@@ -66,8 +66,8 @@ export function CartPanel() {
           const product = item.product;
           const image = productImage(product);
           return (
-            <div key={product._id} className="flex gap-4 border-b border-stone-100 p-5">
-              <div className="grid h-24 w-22 shrink-0 place-items-center overflow-hidden rounded-xl bg-stone-100">
+            <div key={product._id} className="flex gap-4 border-b border-slate-100 p-5">
+              <div className="grid h-24 w-22 shrink-0 place-items-center overflow-hidden rounded-xl bg-slate-100">
                 {image ? <img src={image} alt="" className="h-full w-full object-cover" /> : "M"}
               </div>
               <div className="min-w-0 flex-1">
@@ -78,7 +78,7 @@ export function CartPanel() {
                 <p className="mt-1 font-medium">{money(item.unitPrice)}</p>
                 {!item.available && <p className="mt-1 text-xs text-rose-600">This quantity is no longer available.</p>}
                 <div className="mt-3 flex items-center justify-between">
-                  <div className="flex items-center rounded-full border border-stone-300">
+                  <div className="flex items-center rounded-full border border-slate-300">
                     <button
                       aria-label="Decrease quantity"
                       disabled={item.quantity === 1 || update.isPending}
@@ -117,7 +117,7 @@ export function CartPanel() {
             <dt className="text-slate-500">Discount</dt>
             <dd className="text-emerald-700">-{money(cart.discount)}</dd>
           </div>
-          <div className="flex justify-between border-t border-stone-200 pt-4 text-lg font-semibold">
+          <div className="flex justify-between border-t border-slate-200 pt-4 text-lg font-semibold">
             <dt>Total</dt>
             <dd>{money(cart.total)}</dd>
           </div>

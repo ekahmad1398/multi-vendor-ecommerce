@@ -54,15 +54,15 @@ export function ProductCard({ product }: { product: Product }) {
     <motion.article initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="group">
       <Link
         href={`/products/${product._id}`}
-        className="relative grid aspect-[0.9] place-items-center overflow-hidden rounded-2xl bg-stone-100 transition duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
+        className="relative grid aspect-[0.9] place-items-center overflow-hidden rounded-2xl bg-slate-100 transition duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
       >
         {image ? (
           <img src={image} alt={product.name} className="h-full w-full object-cover" />
         ) : (
-          <span className="font-serif text-4xl text-stone-400">M</span>
+          <span className="font-serif text-4xl text-slate-400">M</span>
         )}
         {product.discount > 0 && (
-          <span className="absolute left-3 top-3 rounded-full bg-amber-700 px-2 py-1 text-[10px] font-bold text-white">
+          <span className="absolute left-3 top-3 rounded-full bg-violet-700 px-2 py-1 text-[10px] font-bold text-white">
             -{product.discount}%
           </span>
         )}
@@ -83,12 +83,12 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="flex items-center justify-between gap-2">
           <p className="truncate text-xs text-slate-500">{product.brand || product.category?.name}</p>
           <span className="flex shrink-0 items-center gap-1 text-xs text-slate-500">
-            <Star size={12} className="fill-amber-500 text-amber-500" />
+            <Star size={12} className="fill-violet-500 text-violet-500" />
             {(product.rating ?? 0).toFixed(1)}
             <span className="hidden sm:inline">({product.reviewCount ?? 0})</span>
           </span>
         </div>
-        <Link href={`/products/${product._id}`} className="mt-1 block font-medium hover:text-amber-800">
+        <Link href={`/products/${product._id}`} className="mt-1 block font-medium hover:text-violet-800">
           {product.name}
         </Link>
         <div className="mt-2 flex items-center justify-between gap-2">
@@ -119,8 +119,8 @@ export function CategoryGrid({ categories }: { categories: Category[] }) {
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
       {categories.map((category, index) => (
         <motion.div whileHover={{ y: -4 }} key={category._id}>
-          <Link href={`/products?category=${category._id}`} className="card block min-h-40 p-5 hover:border-amber-300">
-            <span className="font-serif text-3xl text-amber-700">{String(index + 1).padStart(2, "0")}</span>
+          <Link href={`/products?category=${category._id}`} className="card block min-h-40 p-5 hover:border-violet-300">
+            <span className="font-serif text-3xl text-violet-700">{String(index + 1).padStart(2, "0")}</span>
             <h3 className="mt-7 font-serif text-2xl">{category.name}</h3>
             <p className="mt-1 line-clamp-2 text-sm text-slate-500">{category.description || "Explore the collection"}</p>
           </Link>

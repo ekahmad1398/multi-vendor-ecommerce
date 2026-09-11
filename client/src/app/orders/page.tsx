@@ -16,7 +16,7 @@ export default function Orders() {
       <PageHeader eyebrow="Account" title="Your orders" description="Follow fulfilment, payments, and delivery details." />
       <div className="mt-8">
         {query.isLoading ? (
-          <div className="h-64 animate-pulse rounded-2xl bg-stone-100" />
+          <div className="h-64 animate-pulse rounded-2xl bg-slate-100" />
         ) : query.isError || !query.data ? (
           <ErrorState onRetry={() => query.refetch()} />
         ) : !query.data.orders.length ? (
@@ -32,7 +32,7 @@ export default function Orders() {
         ) : (
           <div className="space-y-3">
             {query.data.orders.map((order: Order) => (
-              <Link href={`/orders/${order._id}`} key={order._id} className="card flex flex-wrap items-center justify-between gap-4 p-5 hover:border-amber-300">
+              <Link href={`/orders/${order._id}`} key={order._id} className="card flex flex-wrap items-center justify-between gap-4 p-5 hover:border-violet-300">
                 <div>
                   <p className="font-medium">Order {orderCode(order._id)}</p>
                   <p className="mt-1 text-sm text-slate-500">

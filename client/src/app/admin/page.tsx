@@ -55,7 +55,7 @@ export default function Admin() {
       <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([Icon, label, value]) => (
           <article key={label} className="dashboard-card">
-            <Icon className="text-amber-700" size={20} />
+            <Icon className="text-violet-700" size={20} />
             <p className="mt-7 text-sm text-slate-500">{label}</p>
             <p className="mt-1 font-serif text-3xl">{String(value)}</p>
           </article>
@@ -77,7 +77,7 @@ export default function Admin() {
             {data.bestSellingProducts.length ? (
               data.bestSellingProducts.map((item, index) => (
                 <div className="flex items-center gap-4" key={item.productId}>
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-amber-50 text-sm font-bold text-amber-800">
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-violet-50 text-sm font-bold text-violet-800">
                     {index + 1}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -103,9 +103,9 @@ export default function Admin() {
                     <span className="capitalize">{item.status}</span>
                     <span className="font-medium">{item.count}</span>
                   </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-100">
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100">
                     <div
-                      className="h-full rounded-full bg-amber-600"
+                      className="h-full rounded-full bg-violet-600"
                       style={{ width: `${Math.max(8, (item.count / Math.max(data.totals.totalOrders, 1)) * 100)}%` }}
                     />
                   </div>
@@ -123,7 +123,7 @@ export default function Admin() {
           <h2 className="mt-2 font-serif text-2xl">Sales by category</h2>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {data.salesByCategory.map((item) => (
-              <div key={item.category} className="rounded-xl border border-stone-200 p-4">
+              <div key={item.category} className="rounded-xl border border-slate-200 p-4">
                 <p className="text-sm text-slate-500">{item.category}</p>
                 <p className="mt-1 font-medium">{money(item.sales)}</p>
               </div>
@@ -142,7 +142,7 @@ export default function Admin() {
           </Link>
         </div>
         {orders.isLoading ? (
-          <div className="h-32 animate-pulse bg-stone-50" />
+          <div className="h-32 animate-pulse bg-slate-50" />
         ) : (
           <div className="table-wrap rounded-none border-x-0 border-b-0">
             <table className="data-table">

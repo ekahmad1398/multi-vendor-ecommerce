@@ -16,11 +16,11 @@ const items = [
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   return (
-    <div className="min-h-screen bg-[#f5f6f8]">
+    <div className="workspace-shell">
       <div className="mx-auto grid max-w-[90rem] lg:grid-cols-[250px_1fr]">
-        <aside className="border-b border-white/10 bg-slate-950 p-5 text-slate-300 lg:min-h-screen lg:border-b-0 lg:border-r">
+        <aside className="workspace-sidebar border-b border-white/10 p-5 text-slate-300 lg:min-h-screen lg:border-b-0 lg:border-r">
           <Link href="/admin" className="font-serif text-3xl text-white">
-            morrow<span className="text-amber-400">.</span>{" "}
+            morrow<span className="text-violet-400">.</span>{" "}
             <span className="font-sans text-xs uppercase tracking-widest text-slate-400">Admin</span>
           </Link>
           <nav className="mt-7 flex gap-2 overflow-x-auto pb-1 lg:mt-10 lg:flex-col">

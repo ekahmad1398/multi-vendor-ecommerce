@@ -35,5 +35,5 @@ export default function ClerkCallbackPage() {
     return () => { cancelled = true; };
   }, [getToken, isLoaded, isSignedIn, refresh, router]);
 
-  return <main className="shell grid min-h-[76vh] place-items-center py-10"><div className="auth-card w-full max-w-md p-8 text-center"><div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-stone-200 border-t-amber-700" /><p className="mt-5 font-serif text-3xl">Finishing sign in</p><p className="mt-2 text-sm text-slate-500">Connecting your account to the store...</p></div></main>;
+  return <main className="shell grid min-h-[76vh] place-items-center py-10"><div className="auth-card w-full max-w-md p-8 text-center"><div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-violet-700" /><p className="mt-5 font-serif text-3xl">Finishing sign in</p><p className="mt-2 text-sm text-slate-500">Connecting your account to the store...</p></div></main>;
 }

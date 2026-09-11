@@ -157,7 +157,7 @@ export default function AdminSection() {
                       value={order.status}
                       onChange={(event) => update.mutate({ id: order._id, status: event.target.value })}
                       disabled={update.isPending || order.status === "cancelled"}
-                      className="rounded-lg border border-stone-300 bg-white px-2 py-1 text-sm capitalize"
+                      className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm capitalize"
                     >
                       {statuses.map((status) => (
                         <option key={status}>{status}</option>
@@ -172,7 +172,7 @@ export default function AdminSection() {
                         update.mutate({ id: order._id, status: order.status, paymentStatus: event.target.value })
                       }
                       disabled={update.isPending || order.status === "cancelled"}
-                      className="rounded-lg border border-stone-300 bg-white px-2 py-1 text-sm capitalize"
+                      className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm capitalize"
                     >
                       {payments.map((status) => (
                         <option key={status}>{status}</option>
@@ -207,7 +207,7 @@ export default function AdminSection() {
                       <td>{product.stock}</td>
                       <td className="text-right font-medium">{money(product.price * (1 - product.discount / 100))}</td>
                       <td className="text-right">
-                        <Link href={`/products/${product._id}`} className="text-amber-800">
+                        <Link href={`/products/${product._id}`} className="text-violet-800">
                           View
                         </Link>
                         <button onClick={() => removeProduct.mutate(product._id)} className="ml-4 text-rose-600">
@@ -230,7 +230,7 @@ export default function AdminSection() {
               <p className="font-serif text-2xl">{category.name}</p>
               <p className="mt-2 text-sm text-slate-500">{category.description || "No description provided."}</p>
               <div className="mt-4 flex gap-3 text-sm">
-                <button onClick={() => setCategoryForm(category)} className="text-amber-800">
+                <button onClick={() => setCategoryForm(category)} className="text-violet-800">
                   Edit
                 </button>
                 <button onClick={() => removeCategory.mutate(category._id)} className="text-rose-600">
@@ -265,7 +265,7 @@ export default function AdminSection() {
                         updateUser.mutate({ id: user._id, data: { role: event.target.value as "user" | "seller" | "admin" } })
                       }
                       disabled={updateUser.isPending}
-                      className="rounded-lg border border-stone-300 bg-white px-2 py-1 text-sm capitalize"
+                      className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm capitalize"
                     >
                       <option value="user">user</option>
                       <option value="seller">seller</option>
@@ -283,7 +283,7 @@ export default function AdminSection() {
                           })
                         }
                         disabled={updateUser.isPending}
-                        className="rounded-lg border border-stone-300 bg-white px-2 py-1 text-sm capitalize"
+                        className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm capitalize"
                       >
                         <option value="active">Active</option>
                         <option value="suspended">Suspended</option>

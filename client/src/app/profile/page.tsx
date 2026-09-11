@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/primitives";
 export default function Profile() {
   const profile = useQuery({ queryKey: ["backend-profile"], queryFn: getBackendProfile, retry: false });
 
-  if (profile.isLoading) return <div className="shell py-12"><div className="h-64 animate-pulse rounded-2xl bg-stone-100" /></div>;
+  if (profile.isLoading) return <div className="shell py-12"><div className="h-64 animate-pulse rounded-2xl bg-slate-100" /></div>;
   if (profile.isError || !profile.data) {
     return (
       <div className="shell py-12">
@@ -35,7 +35,7 @@ export default function Profile() {
     <div className="shell py-12">
       <PageHeader eyebrow="Account" title={`Hello, ${account.name.split(" ")[0]}`} description="Your store account, orders, and saved pieces in one place." />
       <section className="card mt-8 grid gap-6 p-6 sm:grid-cols-[auto_1fr] sm:items-center">
-        <span className="grid h-16 w-16 place-items-center rounded-full bg-amber-50 text-amber-800">
+        <span className="grid h-16 w-16 place-items-center rounded-full bg-violet-50 text-violet-800">
           <UserRound size={28} />
         </span>
         <div>
@@ -50,8 +50,8 @@ export default function Profile() {
       </section>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {cards.map(({ Icon, title, description, href }) => (
-          <Link key={title} href={href} className="card p-6 hover:border-amber-300">
-            <Icon size={21} className="text-amber-700" />
+          <Link key={title} href={href} className="card p-6 hover:border-violet-300">
+            <Icon size={21} className="text-violet-700" />
             <h2 className="mt-8 font-serif text-2xl">{title}</h2>
             <p className="mt-1 text-sm text-slate-500">{description}</p>
           </Link>

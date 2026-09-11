@@ -45,7 +45,7 @@ export function EmptyState({
   return (
     <div className="card grid min-h-72 place-items-center p-8 text-center">
       <div>
-        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-amber-50 text-amber-700">
+        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-violet-50 text-violet-700">
           <PackageOpen size={22} />
         </span>
         <h2 className="mt-4 font-serif text-2xl">{title}</h2>
@@ -84,7 +84,7 @@ export function Modal({
   if (!open) return null;
   return (
     <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 grid place-items-center bg-slate-950/35 p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+      <div className="card w-full max-w-md p-6 shadow-2xl">
         <div className="flex items-center justify-between">
           <h2 className="font-serif text-2xl">{title}</h2>
           <button aria-label="Close" onClick={onClose}>

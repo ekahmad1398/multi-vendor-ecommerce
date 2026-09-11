@@ -23,8 +23,8 @@ export function Navbar() {
   const seller = user?.role === "seller"; const admin = user?.role === "admin";
   const shopActive = path.startsWith("/products");
 
-  return <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#f5f7fb]/90 backdrop-blur-xl">
-    <div className="border-b border-slate-200/70 bg-slate-950 text-slate-300"><div className="shell flex h-8 items-center justify-between text-[10px] font-bold uppercase tracking-[.15em]"><span className="inline-flex items-center gap-2"><Sparkles size={12} className="text-[#63f5c6]" /> Independent design, delivered</span><span className="hidden sm:block">Free delivery on qualifying orders</span></div></div>
+  return <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-slate-50/90 backdrop-blur-xl">
+    <div className="border-b border-slate-200/70 bg-slate-950 text-slate-300"><div className="shell flex h-8 items-center justify-between text-[10px] font-bold uppercase tracking-[.15em]"><span className="inline-flex items-center gap-2"><Sparkles size={12} className="text-[#2dd4bf]" /> Independent design, delivered</span><span className="hidden sm:block">Free delivery on qualifying orders</span></div></div>
     <div className="shell flex min-h-[4.9rem] items-center justify-between gap-4 py-2">
       <Link href="/" className="group shrink-0"><span className="block font-serif text-3xl leading-none tracking-[-.07em] text-slate-950">morrow<span className="text-violet-600">.</span></span><span className="mt-1 hidden text-[9px] font-bold uppercase tracking-[.18em] text-slate-400 sm:block">Curated marketplace</span></Link>
       <nav className="desktop-only items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm"><Link href="/" className={`nav-link rounded-lg px-3 py-2 ${path === "/" ? "is-active bg-slate-950 font-medium" : ""}`}>Home</Link>{links.map(([label, href]) => <Link key={href} href={href} className={`nav-link rounded-lg px-3 py-2 ${shopActive && href === "/products" ? "is-active bg-slate-950 font-medium" : ""}`}>{label}</Link>)}</nav>

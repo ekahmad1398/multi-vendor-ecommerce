@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed:products": "node scripts/seed-products.js"
   },
   "dependencies": {
     "@clerk/backend": "^3.17.2",

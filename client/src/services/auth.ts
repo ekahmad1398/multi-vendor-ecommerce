@@ -25,4 +25,10 @@ export const verifyEmail = async (email: string, otp: string) =>
 export const resendOtp = async (email: string) =>
   (await api.post<{ message: string }>("/auth/resend-otp", { email })).data;
 
+export const forgotPassword = async (email: string) =>
+  (await api.post<{ message: string }>("/auth/forgot-password", { email })).data;
+
+export const resetPassword = async (email: string, otp: string, password: string) =>
+  (await api.post<{ message: string }>("/auth/reset-password", { email, otp, password })).data;
+
 export const logout = async () => { await api.post("/auth/logout"); };
