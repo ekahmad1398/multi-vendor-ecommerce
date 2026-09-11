@@ -10,11 +10,13 @@ import { useLocalAuth } from "@/components/auth/local-auth-provider";
 // session for the same secure backend cookie used by local-password accounts.
 export function ClerkBridge() {
   const { isLoaded, isSignedIn, sessionId, getToken } = useAuth();
-  const { refresh } = useLocalAuth();
+  const { user, isLoading, refresh } = useLocalAuth();
   const bridgedSession = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn || !sessionId || bridgedSession.current === sessionId) return;
+    // Wait for the local session lookup. This prevents a persisted Clerk session
+    // from replacing an intentional local-password session during app startup.
+    if (!isLoaded || isLoading || !isSignedIn || !sessionId || user || bridgedSession.current === sessionId) return;
     let cancelled = false;
     const bridge = async () => {
       try {
@@ -28,6 +30,6 @@ export function ClerkBridge() {
     };
     void bridge();
     return () => { cancelled = true; };
-  }, [getToken, isLoaded, isSignedIn, refresh, sessionId]);
+  }, [getToken, isLoaded, isLoading, isSignedIn, refresh, sessionId, user]);
   return null;
 }
