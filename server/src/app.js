@@ -11,13 +11,12 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import sellerRoutes from "./routes/sellerRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import { clientOrigins } from "./config/clientOrigins.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 
-const app = express();
-
 // Browsers only accept credentialed CORS requests for an explicit origin, never "*".
-const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:3000").split(",").map((origin) => origin.trim());
-app.use(cors({ origin: (origin, callback) => (!origin || allowedOrigins.includes(origin) ? callback(null, true) : callback(new Error("CORS origin is not allowed"))), credentials: true }));
+const app = express();
+app.use(cors({ origin: (origin, callback) => (!origin || clientOrigins.includes(origin) ? callback(null, true) : callback(new Error("CORS origin is not allowed"))), credentials: true }));
 app.use(express.json());
 app.use(cookieParser()); // Parses the Cookie request header so protected routes can read req.cookies.
 app.use("/api/auth", rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: "draft-8", legacyHeaders: false, message: { message: "Too many authentication attempts. Please try again later." } }));

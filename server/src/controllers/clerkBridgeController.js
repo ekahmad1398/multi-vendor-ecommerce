@@ -6,6 +6,7 @@ import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { createToken } from "../utils/jwt.js";
 import { cookieOptions } from "./authController.js";
+import { clientOrigins } from "../config/clientOrigins.js";
 
 const clerk = () => {
   if (!process.env.CLERK_SECRET_KEY) {
@@ -27,10 +28,9 @@ const clerkEmail = (user) => {
 };
 
 export const bridgeClerkSession = asyncHandler(async (req, res) => {
-  const authorizedParties = (process.env.CLIENT_URL || "http://localhost:3000").split(",").map((value) => value.trim());
   let claims;
   try {
-    claims = await verifyToken(bearerToken(req), { secretKey: process.env.CLERK_SECRET_KEY, authorizedParties });
+    claims = await verifyToken(bearerToken(req), { secretKey: process.env.CLERK_SECRET_KEY, authorizedParties: clientOrigins });
   } catch {
     throw new AppError("Invalid or expired Clerk session", 401);
   }
