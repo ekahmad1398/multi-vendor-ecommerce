@@ -10,7 +10,8 @@ import { otpEmail } from "../utils/emailTemplates.js";
 export const cookieOptions = {
   httpOnly: true, // Prevents JavaScript in the browser from reading the JWT cookie.
   secure: process.env.NODE_ENV === "production", // HTTPS only in production; localhost HTTP still works in development.
-  sameSite: "lax", // Helps prevent cross-site requests from automatically carrying the cookie.
+  // HTTPS deployments use cross-site requests (Vercel -> Render), which require SameSite=None.
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 const sendVerificationOtp = async (user) => {
