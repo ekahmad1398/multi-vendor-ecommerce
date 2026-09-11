@@ -26,7 +26,7 @@ function ClerkOption({ mode }: { mode: "sign-in" | "sign-up" }) {
 
 function ClerkScreen({ mode }: { mode: "sign-in" | "sign-up" }) {
   const other = mode === "sign-in" ? "/sign-in" : "/sign-up";
-  return <div className="shell grid min-h-[76vh] place-items-center py-10"><div className="w-full max-w-md"><Link href={other} className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-amber-800">← Use local account instead</Link>{mode === "sign-in" ? <SignIn routing="hash" fallbackRedirectUrl="/" /> : <SignUp routing="hash" fallbackRedirectUrl="/" />}</div></div>;
+  return <div className="shell grid min-h-[76vh] place-items-center py-10"><div className="w-full max-w-md"><Link href={other} className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-amber-800">← Use local account instead</Link>{mode === "sign-in" ? <SignIn routing="hash" fallbackRedirectUrl="/clerk-callback" /> : <SignUp routing="hash" fallbackRedirectUrl="/clerk-callback" />}</div></div>;
 }
 
 function VerifyBox({ email, force = false }: { email: string; force?: boolean }) {

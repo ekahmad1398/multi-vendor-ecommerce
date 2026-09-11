@@ -33,7 +33,7 @@ export default function SellerDashboard() {
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([Icon, label, value]) => (
-          <article key={label} className="rounded-2xl bg-white p-5 shadow-sm">
+            <article key={label} className="dashboard-card">
             <Icon className="text-amber-700" size={20} />
             <p className="mt-7 text-sm text-slate-500">{label}</p>
             <p className="mt-1 font-serif text-3xl">{String(value)}</p>
