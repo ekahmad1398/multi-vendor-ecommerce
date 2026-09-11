@@ -26,7 +26,14 @@ export const register = asyncHandler(async (req, res) => {
   if (await User.findOne({ email: email.toLowerCase() })) throw new AppError("Email is already registered", 409);
   // Hash before storage so a database leak never exposes the original password.
   const user = await User.create({ name, email, password: await bcrypt.hash(password, 12) });
-  await sendVerificationOtp(user);
+  try {
+    await sendVerificationOtp(user);
+  } catch (error) {
+    // A failed mail provider must not leave an unreachable, unverified account
+    // behind; otherwise every retry would incorrectly report a duplicate email.
+    await user.deleteOne();
+    throw error;
+  }
   res.status(201).json({ message: "Registration successful. Check Mailtrap for your verification code, then log in.", user: { id: user._id, name: user.name, email: user.email, role: user.role, isEmailVerified: user.isEmailVerified } });
 });
 

@@ -1,10 +1,11 @@
 import nodemailer from "nodemailer";
 import { MailtrapTransport } from "mailtrap";
+import AppError from "./AppError.js";
 
 export const sendEmail = async ({ to, subject, text, html }) => {
   const { MAILTRAP_TOKEN, MAIL_FROM, MAIL_FROM_NAME } = process.env;
   if (!MAILTRAP_TOKEN || !MAIL_FROM) {
-    throw new Error("MAILTRAP_TOKEN and MAIL_FROM are required");
+    throw new AppError("Email delivery is not configured. Set MAILTRAP_TOKEN and MAIL_FROM on the server.", 503);
   }
 
   // Mailtrap's API transport authenticates with an API token instead of SMTP host/user/password.

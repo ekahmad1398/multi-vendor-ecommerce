@@ -8,5 +8,8 @@ export const errorHandler = (err, req, res, next) => {
   if (err.name === "MulterError") return res.status(400).json({ message: err.code === "LIMIT_FILE_SIZE" ? "Image file is too large" : "Invalid image upload" });
   if (err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") return res.status(401).json({ message: "Invalid or expired authentication token" });
   const status = err.statusCode || 500;
-  res.status(status).json({ message: status >= 500 && process.env.NODE_ENV === "production" ? "Internal server error" : err.message || "Internal server error" });
+  const message = status >= 500 && process.env.NODE_ENV === "production" && !err.isOperational
+    ? "Internal server error"
+    : err.message || "Internal server error";
+  res.status(status).json({ message });
 };
