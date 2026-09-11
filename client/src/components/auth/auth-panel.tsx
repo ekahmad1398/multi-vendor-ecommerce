@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle, Mail, ShieldCheck } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { login, register, resendOtp, verifyEmail } from "@/services/auth";
 import { useLocalAuth } from "@/components/auth/local-auth-provider";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import { SignIn, SignUp } from "@clerk/nextjs";
 
 type FieldProps = { label: string; hint?: string; onValue?: (value: string) => void } & React.InputHTMLAttributes<HTMLInputElement>;
 function Field({ label, hint, onValue, ...props }: FieldProps) {
@@ -20,8 +20,13 @@ function AuthShell({ eyebrow, title, note, children }: { eyebrow: string; title:
 
 function ClerkOption({ mode }: { mode: "sign-in" | "sign-up" }) {
   const label = mode === "sign-in" ? "Continue with Clerk" : "Create with Clerk";
-  const button = <button type="button" className="btn w-full border border-slate-200 bg-white text-slate-800 hover:border-slate-400">{label}</button>;
-  return <div className="mt-6 border-t border-stone-200 pt-6"><p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">or use Clerk</p>{mode === "sign-in" ? <SignInButton mode="modal">{button}</SignInButton> : <SignUpButton mode="modal">{button}</SignUpButton>}</div>;
+  const href = mode === "sign-in" ? "/sign-in?method=clerk" : "/sign-up?method=clerk";
+  return <div className="mt-6 border-t border-stone-200 pt-6"><p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">or use Clerk</p><Link href={href} className="btn w-full border border-slate-200 bg-white text-slate-800 hover:border-slate-400">{label}</Link></div>;
+}
+
+function ClerkScreen({ mode }: { mode: "sign-in" | "sign-up" }) {
+  const other = mode === "sign-in" ? "/sign-in" : "/sign-up";
+  return <div className="shell grid min-h-[76vh] place-items-center py-10"><div className="w-full max-w-md"><Link href={other} className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-amber-800">← Use local account instead</Link>{mode === "sign-in" ? <SignIn routing="hash" fallbackRedirectUrl="/" /> : <SignUp routing="hash" fallbackRedirectUrl="/" />}</div></div>;
 }
 
 function VerifyBox({ email, force = false }: { email: string; force?: boolean }) {
@@ -34,13 +39,17 @@ function VerifyBox({ email, force = false }: { email: string; force?: boolean })
 
 export function SignInPanel() {
   const router = useRouter(); const { refresh } = useLocalAuth(); const [pending, setPending] = useState(false); const [email, setEmail] = useState("");
+  const search = useSearchParams();
   const submit = async (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setPending(true); const data = new FormData(event.currentTarget); try { const result = await login(String(data.get("email")), String(data.get("password"))); await refresh(); toast.success(result.message); router.push("/"); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to sign in"); } finally { setPending(false); } };
+  if (search.get("method") === "clerk") return <ClerkScreen mode="sign-in" />;
   return <AuthShell eyebrow="Welcome back" title="Good to see you." note="Sign in to manage your orders, saved pieces, and bag."><form className="mt-7 space-y-4" onSubmit={submit}><Field label="Email address" name="email" type="email" value={email} onValue={setEmail} /><Field label="Password" name="password" type="password" minLength={8} /><button className="btn btn-dark w-full" disabled={pending}>{pending ? <LoaderCircle className="animate-spin" size={17} /> : <>Sign in <ArrowRight size={17} /></>}</button></form><ClerkOption mode="sign-in" /><p className="mt-6 text-center text-sm text-slate-500">New here? <Link className="font-semibold text-amber-800" href="/sign-up">Create an account</Link></p><VerifyBox email={email} /></AuthShell>;
 }
 
 export function SignUpPanel() {
   const [pending, setPending] = useState(false); const [email, setEmail] = useState(""); const [registered, setRegistered] = useState(false);
+  const search = useSearchParams();
   const submit = async (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setPending(true); const data = new FormData(event.currentTarget); const address = String(data.get("email")); try { const result = await register(String(data.get("name")), address, String(data.get("password"))); setEmail(address); setRegistered(true); toast.success(result.message); } catch (error) { toast.error(error instanceof Error ? error.message : "Unable to create your account"); } finally { setPending(false); } };
+  if (search.get("method") === "clerk") return <ClerkScreen mode="sign-up" />;
   if (registered) return <AuthShell eyebrow="One last step" title="Confirm your email." note="We sent a six-digit code to your inbox."><VerifyBox email={email} force /></AuthShell>;
   return <AuthShell eyebrow="Join the edit" title="Make it yours." note="Create one account for orders, favourites, and easy checkout."><form className="mt-7 space-y-4" onSubmit={submit}><Field label="Full name" name="name" autoComplete="name" minLength={2} /><Field label="Email address" name="email" type="email" value={email} onValue={setEmail} /><Field label="Password" name="password" type="password" minLength={8} hint="At least 8 characters" /><button className="btn btn-dark w-full" disabled={pending}>{pending ? <LoaderCircle className="animate-spin" size={17} /> : <>Create account <ArrowRight size={17} /></>}</button></form><ClerkOption mode="sign-up" /><p className="mt-6 text-center text-sm text-slate-500">Already have an account? <Link className="font-semibold text-amber-800" href="/sign-in">Sign in</Link></p></AuthShell>;
 }
