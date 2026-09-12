@@ -11,12 +11,11 @@ import { useLocalAuth } from "@/components/auth/local-auth-provider";
 export function ClerkBridge() {
   const { isLoaded, isSignedIn, sessionId, getToken } = useAuth();
   const { signOut: clerkSignOut } = useClerk();
-  const { isLoading, refresh } = useLocalAuth();
+  const { user, isLoading, refresh } = useLocalAuth();
   const bridgedSession = useRef<string | null>(null);
 
   useEffect(() => {
-    // Wait for the local session lookup before exchanging the Clerk session.
-    if (!isLoaded || isLoading || !isSignedIn || !sessionId || bridgedSession.current === sessionId) return;
+    if (!isLoaded || isLoading || !isSignedIn || !sessionId || user || bridgedSession.current === sessionId) return;
     let cancelled = false;
     const bridge = async () => {
       try {
@@ -34,6 +33,6 @@ export function ClerkBridge() {
     };
     void bridge();
     return () => { cancelled = true; };
-  }, [clerkSignOut, getToken, isLoaded, isLoading, isSignedIn, refresh, sessionId]);
+  }, [clerkSignOut, getToken, isLoaded, isLoading, isSignedIn, refresh, sessionId, user]);
   return null;
 }
