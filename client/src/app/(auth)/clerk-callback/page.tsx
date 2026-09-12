@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { api } from "@/lib/api/axios";
+import { api, setAccessToken } from "@/lib/api/axios";
 import { useLocalAuth } from "@/components/auth/local-auth-provider";
 
 export default function ClerkCallbackPage() {
@@ -21,7 +21,8 @@ export default function ClerkCallbackPage() {
       try {
         const token = await getToken();
         if (!token) throw new Error("Your Clerk session has expired. Please sign in again.");
-        await api.post("/auth/clerk", undefined, { headers: { Authorization: `Bearer ${token}` } });
+        const result = await api.post<{ token: string }>("/auth/clerk", undefined, { headers: { Authorization: `Bearer ${token}` } });
+        setAccessToken(result.data.token);
         await refresh();
         if (!cancelled) router.replace("/dashboard");
       } catch (error) {

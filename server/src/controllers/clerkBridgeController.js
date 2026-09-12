@@ -76,5 +76,5 @@ export const bridgeClerkSession = asyncHandler(async (req, res) => {
 
   const token = createToken(user._id, user.tokenVersion);
   res.cookie("token", token, cookieOptions);
-  res.json({ message: "Clerk session linked", user: publicUser(user) });
+  res.json({ message: "Clerk session linked", token, user: publicUser(user) });
 });

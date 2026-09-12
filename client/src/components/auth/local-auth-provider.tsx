@@ -27,6 +27,9 @@ export function LocalAuthProvider({ children }: { children: React.ReactNode }) {
     refreshVersion.current += 1;
     setUser(account);
     setIsLoading(false);
+    queryClient.removeQueries({ queryKey: ["cart"] });
+    queryClient.removeQueries({ queryKey: ["orders"] });
+    queryClient.removeQueries({ queryKey: ["wishlist"] });
     queryClient.setQueryData(["backend-profile"], account);
   }, [queryClient]);
 
@@ -55,7 +58,14 @@ export function LocalAuthProvider({ children }: { children: React.ReactNode }) {
   }, [refresh]);
 
   const signOut = useCallback(async () => {
-    try { await logoutRequest(); } finally { refreshVersion.current += 1; setUser(null); queryClient.removeQueries({ queryKey: ["backend-profile"] }); }
+    try { await logoutRequest(); } finally {
+      refreshVersion.current += 1;
+      setUser(null);
+      queryClient.removeQueries({ queryKey: ["backend-profile"] });
+      queryClient.removeQueries({ queryKey: ["cart"] });
+      queryClient.removeQueries({ queryKey: ["orders"] });
+      queryClient.removeQueries({ queryKey: ["wishlist"] });
+    }
   }, [queryClient]);
 
   const value = useMemo(() => ({ user, isLoading, isSignedIn: Boolean(user), refresh, setSession, signOut }), [user, isLoading, refresh, setSession, signOut]);
