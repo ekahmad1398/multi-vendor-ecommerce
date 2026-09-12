@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { CircleDollarSign, Package, ShoppingCart, Users } from "lucide-react";
+import { ArrowUpRight, CircleDollarSign, FolderTree, Package, ShoppingCart, Store, Users } from "lucide-react";
 import { getAdminOrders, getAdminStats } from "@/services/admin";
 import { ErrorState } from "@/components/ui/primitives";
 import { money, orderCode } from "@/lib/format";
@@ -42,11 +42,11 @@ export default function Admin() {
 
   return (
     <>
-      <header className="flex flex-wrap items-end justify-between gap-4">
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-7">
         <div>
           <p className="eyebrow">Store control centre</p>
-          <h1 className="mt-2 font-serif text-5xl">Overview</h1>
-          <p className="mt-2 text-slate-500">Live store performance and recent order activity.</p>
+          <h1 className="mt-2 font-serif text-5xl">Store overview.</h1>
+          <p className="mt-3 text-slate-500">Live store performance and recent order activity.</p>
         </div>
         <Link href="/admin/products" className="btn btn-dark">
           Manage catalogue
@@ -54,14 +54,14 @@ export default function Admin() {
       </header>
       <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([Icon, label, value]) => (
-          <article key={label} className="dashboard-card">
-            <Icon className="text-violet-700" size={20} />
-            <p className="mt-7 text-sm text-slate-500">{label}</p>
-            <p className="mt-1 font-serif text-3xl">{String(value)}</p>
+          <article key={label} className="dashboard-card transition hover:border-violet-300 hover:shadow-md">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-violet-50 text-violet-700"><Icon size={20} /></span>
+            <p className="mt-6 text-sm font-medium text-slate-500">{label}</p>
+            <p className="mt-1 font-serif text-3xl text-slate-950">{String(value)}</p>
           </article>
         ))}
       </section>
-      <p className="mt-4 text-sm text-slate-500">Average order value {money(data.averageOrderValue || 0)}</p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500"><p>Average order value {money(data.averageOrderValue || 0)}</p><div className="flex gap-2"><Link href="/admin/categories" className="inline-flex items-center gap-1 font-semibold text-violet-700 hover:text-violet-900"><FolderTree size={15} /> Categories</Link><span className="text-slate-300">·</span><Link href="/admin/sellers" className="inline-flex items-center gap-1 font-semibold text-violet-700 hover:text-violet-900"><Store size={15} /> Vendors</Link></div></div>
       <section className="mt-6 grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
         <div className="card p-6">
           <div className="flex items-center justify-between">
@@ -70,7 +70,7 @@ export default function Admin() {
               <h2 className="mt-2 font-serif text-2xl">Best sellers</h2>
             </div>
             <Link href="/admin/products" className="text-link">
-              Products
+              Products <ArrowUpRight size={16} />
             </Link>
           </div>
           <div className="mt-6 space-y-4">
@@ -138,7 +138,7 @@ export default function Admin() {
             <h2 className="mt-2 font-serif text-2xl">Recent orders</h2>
           </div>
           <Link href="/admin/orders" className="text-link">
-            View all
+            View all <ArrowUpRight size={16} />
           </Link>
         </div>
         {orders.isLoading ? (
