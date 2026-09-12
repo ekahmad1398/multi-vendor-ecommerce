@@ -24,8 +24,8 @@ export default function Profile() {
     { Icon: Package, title: "Orders", description: "Track deliveries and past purchases", href: "/orders" },
     { Icon: Heart, title: "Wishlist", description: "Pieces you saved for later", href: "/wishlist" },
   ];
-  if (account.role === "seller") {
-    cards.push({ Icon: Store, title: "Seller studio", description: "Manage products and fulfilment", href: "/seller" });
+  if (account.role === "vendor") {
+    cards.push({ Icon: Store, title: "Vendor studio", description: "Manage products and fulfilment", href: "/seller" });
   }
   if (account.role === "admin") {
     cards.push({ Icon: ShieldCheck, title: "Admin", description: "Operate the store", href: "/admin" });
@@ -42,7 +42,7 @@ export default function Profile() {
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="font-serif text-3xl">{account.name}</h2>
             <Badge>{account.role}</Badge>
-            {account.role === "seller" && account.sellerStatus && <Badge tone={account.sellerStatus === "active" ? "green" : "red"}>{account.sellerStatus}</Badge>}
+            {account.role === "vendor" && account.sellerStatus && <Badge tone={account.sellerStatus === "active" ? "green" : "red"}>{account.sellerStatus}</Badge>}
           </div>
           <p className="mt-2 text-sm text-slate-500">{account.email}</p>
           <p className="mt-1 text-xs text-slate-400">Signed in with your Morrow account</p>

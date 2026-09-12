@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { normalizeRole } from "../utils/roles.js";
 
 export const protect = asyncHandler(async (req, res, next) => {
   const header = req.headers.authorization;
@@ -18,6 +19,8 @@ export const protect = asyncHandler(async (req, res, next) => {
     throw new AppError("Invalid or expired authentication token", 401);
   }
   if (!req.user) throw new AppError("User no longer exists", 401);
+  // The role is always read from MongoDB, never from a local or Clerk token.
+  req.user.role = normalizeRole(req.user.role);
   next();
 });
 
@@ -28,6 +31,6 @@ export const adminOnly = (req, res, next) => {
 };
 
 export const sellerOnly = (req, res, next) => {
-  if (req.user.role !== "seller" || req.user.sellerStatus === "suspended") return next(new AppError("Active seller access is required", 403));
+  if (req.user.role !== "vendor" || req.user.sellerStatus === "suspended") return next(new AppError("Active vendor access is required", 403));
   next();
 };

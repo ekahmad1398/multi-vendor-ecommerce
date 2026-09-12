@@ -6,6 +6,7 @@ import { createToken } from "../utils/jwt.js";
 import { createOtp, getOtpExpiry, hashOtp } from "../utils/otp.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import { otpEmail } from "../utils/emailTemplates.js";
+import { publicUser } from "../utils/roles.js";
 
 export const cookieOptions = {
   httpOnly: true, // Prevents JavaScript in the browser from reading the JWT cookie.
@@ -35,7 +36,7 @@ export const register = asyncHandler(async (req, res) => {
     await user.deleteOne();
     throw error;
   }
-  res.status(201).json({ message: "Registration successful. Check Mailtrap for your verification code, then log in.", user: { id: user._id, name: user.name, email: user.email, role: user.role, isEmailVerified: user.isEmailVerified } });
+  res.status(201).json({ message: "Registration successful. Check Mailtrap for your verification code, then log in.", user: publicUser(user) });
 });
 
 export const login = asyncHandler(async (req, res) => {
@@ -45,7 +46,7 @@ export const login = asyncHandler(async (req, res) => {
   const token = createToken(user._id, user.tokenVersion);
   // We return the token for Bearer-token learning, and also set an httpOnly cookie for browser sessions.
   res.cookie("token", token, cookieOptions);
-  res.json({ message: "Login successful", token, user: { id: user._id, name: user.name, email: user.email, role: user.role, isEmailVerified: user.isEmailVerified } });
+  res.json({ message: "Login successful", token, user: publicUser(user) });
 });
 
 export const logout = (req, res) => {
@@ -53,7 +54,7 @@ export const logout = (req, res) => {
   res.json({ message: "Logout successful" });
 };
 
-export const profile = asyncHandler(async (req, res) => res.json({ user: req.user }));
+export const profile = asyncHandler(async (req, res) => res.json({ user: publicUser(req.user) }));
 
 export const verifyEmail = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.body.email.toLowerCase() }).select("+emailOtp +otpExpiresAt");

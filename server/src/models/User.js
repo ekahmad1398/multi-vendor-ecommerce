@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema(
     // Optional link for accounts authenticated through Clerk. Sparse keeps existing local accounts valid.
     clerkId: { type: String, unique: true, sparse: true, trim: true },
     password: { type: String, required: true, select: false },
-    // `user` is the existing customer role; it remains unchanged for backwards compatibility.
-    role: { type: String, enum: ["user", "seller", "admin"], default: "user" },
+    // Legacy values remain readable until `npm run migrate:roles` has been run.
+    role: { type: String, enum: ["customer", "vendor", "admin", "user", "seller"], default: "customer" },
     sellerStatus: { type: String, enum: ["active", "suspended"], default: "active" },
     isEmailVerified: { type: Boolean, default: false },
     emailOtp: { type: String, select: false },

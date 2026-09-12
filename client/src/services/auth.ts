@@ -1,11 +1,13 @@
 import { api } from "@/lib/api/axios";
 
+export type AppRole = "customer" | "vendor" | "admin";
+
 export type BackendUser = {
   id?: string;
   _id?: string;
   name: string;
   email: string;
-  role: "user" | "seller" | "admin";
+  role: AppRole;
   sellerStatus?: "active" | "suspended";
   isEmailVerified?: boolean;
 };

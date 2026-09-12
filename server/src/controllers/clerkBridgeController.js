@@ -7,6 +7,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { createToken } from "../utils/jwt.js";
 import { cookieOptions } from "./authController.js";
 import { clientOrigins } from "../config/clientOrigins.js";
+import { publicUser } from "../utils/roles.js";
 
 const clerk = () => {
   if (!process.env.CLERK_SECRET_KEY) {
@@ -62,7 +63,7 @@ export const bridgeClerkSession = asyncHandler(async (req, res) => {
         // A Clerk-only account cannot use the local password login until it explicitly resets a password.
         password: await bcrypt.hash(randomUUID(), 12),
         isEmailVerified: true,
-        role: "user",
+        role: "customer",
       });
     } catch (error) {
       // Unique indexes close the race between two first bridge requests for the same account.
@@ -75,5 +76,5 @@ export const bridgeClerkSession = asyncHandler(async (req, res) => {
 
   const token = createToken(user._id, user.tokenVersion);
   res.cookie("token", token, cookieOptions);
-  res.json({ message: "Clerk session linked", user: { id: user._id, name: user.name, email: user.email, role: user.role, isEmailVerified: user.isEmailVerified } });
+  res.json({ message: "Clerk session linked", user: publicUser(user) });
 });

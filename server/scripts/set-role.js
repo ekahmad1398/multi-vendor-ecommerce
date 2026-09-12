@@ -8,8 +8,8 @@ dotenv.config({ path: ".env.local", override: true });
 const email = process.argv[2]?.toLowerCase();
 const role = process.argv[3];
 
-if (!email || !["user", "seller", "admin"].includes(role)) {
-  console.error("Usage: node scripts/set-role.js <email> <user|seller|admin>");
+if (!email || !["customer", "vendor", "admin"].includes(role)) {
+  console.error("Usage: node scripts/set-role.js <email> <customer|vendor|admin>");
   process.exit(1);
 }
 

@@ -25,7 +25,7 @@ const payments = ["pending", "paid", "failed", "refunded"];
 export default function AdminSection() {
   const { section } = useParams<{ section: string }>();
   const client = useQueryClient();
-  const userRole = section === "sellers" ? "seller" : "user";
+  const userRole = section === "sellers" ? "vendor" : "customer";
   const [categoryForm, setCategoryForm] = useState<Category | { name: string; description?: string } | null>(null);
 
   const orders = useQuery({ queryKey: ["admin-orders"], queryFn: () => getAdminOrders(), enabled: section === "orders" });
@@ -57,7 +57,7 @@ export default function AdminSection() {
       data,
     }: {
       id: string;
-      data: { sellerStatus?: "active" | "suspended"; role?: "user" | "seller" | "admin" };
+      data: { sellerStatus?: "active" | "suspended"; role?: "customer" | "vendor" | "admin" };
     }) => updateAdminUser(id, data),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["admin-users"] });
@@ -262,13 +262,13 @@ export default function AdminSection() {
                     <select
                       value={user.role}
                       onChange={(event) =>
-                        updateUser.mutate({ id: user._id, data: { role: event.target.value as "user" | "seller" | "admin" } })
+                        updateUser.mutate({ id: user._id, data: { role: event.target.value as "customer" | "vendor" | "admin" } })
                       }
                       disabled={updateUser.isPending}
                       className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm capitalize"
                     >
-                      <option value="user">user</option>
-                      <option value="seller">seller</option>
+                      <option value="customer">customer</option>
+                      <option value="vendor">vendor</option>
                       <option value="admin">admin</option>
                     </select>
                   </td>

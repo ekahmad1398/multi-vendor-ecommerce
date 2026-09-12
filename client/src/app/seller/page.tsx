@@ -23,7 +23,7 @@ export default function SellerDashboard() {
     <>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Seller dashboard</p>
+          <p className="eyebrow">Vendor dashboard</p>
           <h1 className="mt-2 font-serif text-5xl">Your store</h1>
           <p className="mt-2 text-slate-500">Revenue counts paid or delivered line items only.</p>
         </div>

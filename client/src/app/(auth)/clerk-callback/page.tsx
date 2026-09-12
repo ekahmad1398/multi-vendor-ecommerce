@@ -23,7 +23,7 @@ export default function ClerkCallbackPage() {
         if (!token) throw new Error("Your Clerk session has expired. Please sign in again.");
         await api.post("/auth/clerk", undefined, { headers: { Authorization: `Bearer ${token}` } });
         await refresh();
-        if (!cancelled) router.replace("/");
+        if (!cancelled) router.replace("/dashboard");
       } catch (error) {
         if (!cancelled) {
           toast.error(error instanceof Error ? error.message : "Could not connect your Clerk account.");

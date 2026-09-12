@@ -9,7 +9,7 @@ const items = [
   [Package, "Products", "/admin/products"],
   [FolderTree, "Categories", "/admin/categories"],
   [ShoppingCart, "Orders", "/admin/orders"],
-  [Store, "Sellers", "/admin/sellers"],
+  [Store, "Vendors", "/admin/sellers"],
   [Users, "Customers", "/admin/users"],
 ] as const;
 

@@ -4,7 +4,7 @@ import { ArrowUpRight, Mail, ShieldCheck, Truck } from "lucide-react";
 const linkGroups = [
   ["Browse", [["All products", "/products"], ["New arrivals", "/products?sort=newest"], ["Categories", "/categories"]]],
   ["Account", [["Your profile", "/profile"], ["Orders", "/orders"], ["Wishlist", "/wishlist"]]],
-  ["For sellers", [["Seller studio", "/seller"], ["Your products", "/seller/products"], ["Start selling", "/seller/profile"]]],
+  ["For vendors", [["Vendor studio", "/seller"], ["Your products", "/seller/products"], ["Start selling", "/seller/profile"]]],
 ] as const;
 
 export function Footer() {

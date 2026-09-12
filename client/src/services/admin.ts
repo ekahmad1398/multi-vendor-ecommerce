@@ -1,5 +1,6 @@
 import { api } from "@/lib/api/axios";
 import type { Order } from "@/types";
+import type { AppRole } from "@/services/auth";
 
 export const getAdminStats = async () => (await api.get("/orders/admin/stats")).data;
 export const getAdminOrders = async (params?: Record<string, string>) =>
@@ -16,7 +17,7 @@ export type AdminUser = {
   _id: string;
   name: string;
   email: string;
-  role: "user" | "seller" | "admin";
+  role: AppRole;
   sellerStatus?: "active" | "suspended";
   isEmailVerified: boolean;
   createdAt: string;
@@ -24,7 +25,7 @@ export type AdminUser = {
 
 export type AdminOrder = Order & { user?: { name: string; email?: string } };
 
-export const getAdminUsers = async (role?: "user" | "seller" | "admin") =>
+export const getAdminUsers = async (role?: AppRole) =>
   (await api.get<{ users: AdminUser[] }>("/admin/users", { params: role ? { role } : undefined })).data;
 
 export const updateAdminUser = async (

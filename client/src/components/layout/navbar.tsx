@@ -9,21 +9,20 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useClerk } from "@clerk/nextjs";
 import type { RootState } from "@/store";
 import { useLocalAuth } from "@/components/auth/local-auth-provider";
+import { toast } from "sonner";
 
 const links = [["Shop", "/products"], ["Categories", "/categories"], ["New arrivals", "/products?sort=newest"]] as const;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const count = useSelector((state: RootState) => state.cart.itemCount);
-  const { user, isSignedIn, signOut } = useLocalAuth();
+  const { isSignedIn, signOut } = useLocalAuth();
   const { signOut: clerkSignOut } = useClerk();
   const queryClient = useQueryClient();
   const router = useRouter();
   const path = usePathname();
-  const seller = user?.role === "seller";
-  const admin = user?.role === "admin";
   const close = () => setOpen(false);
-  const handleSignOut = async () => { await signOut(); await clerkSignOut(); queryClient.clear(); close(); router.push("/"); };
+  const handleSignOut = async () => { await signOut(); await clerkSignOut(); queryClient.clear(); toast.success("Signed out successfully"); close(); router.push("/"); };
   const isActive = (href: string) => href === "/products" ? path.startsWith("/products") : path === href;
 
   return (
@@ -43,7 +42,7 @@ export function Navbar() {
           <div className="flex items-center gap-1">
             <Link aria-label="Search products" href="/products" className="icon"><Search size={19} /></Link>
             <Link aria-label="Wishlist" href="/wishlist" className="icon hidden sm:grid"><Heart size={19} /></Link>
-            {(seller || admin) && <Link href={seller ? "/seller" : "/admin"} aria-label="Workspace" className="icon hidden text-violet-700 sm:grid"><LayoutDashboard size={18} /></Link>}
+            {isSignedIn && <Link href="/dashboard" aria-label="Dashboard" className="icon hidden text-violet-700 sm:grid"><LayoutDashboard size={18} /></Link>}
             {!isSignedIn ? <div className="hidden items-center gap-2 sm:flex"><Link href="/sign-in" className="px-2 py-2 text-sm font-semibold text-slate-700 hover:text-violet-700">Sign in</Link><Link href="/sign-up" className="btn btn-dark px-3.5 py-2">Create account</Link></div> : <div className="hidden items-center gap-1 sm:flex"><Link href="/profile" aria-label="My account" className="icon bg-violet-50 text-violet-700"><UserRound size={18} /></Link><button aria-label="Sign out" onClick={handleSignOut} className="icon"><LogOut size={18} /></button></div>}
             <Link aria-label="Cart" href="/cart" className="icon relative"><ShoppingBag size={19} />{count > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-violet-600 px-1 text-[10px] font-bold text-white">{count}</span>}</Link>
             <button aria-label="Menu" className="icon mobile-only" onClick={() => setOpen((value) => !value)}>{open ? <X size={21} /> : <Menu size={21} />}</button>

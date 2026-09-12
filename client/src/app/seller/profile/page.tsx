@@ -15,7 +15,7 @@ export default function SellerProfile() {
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["seller-profile"] });
       client.invalidateQueries({ queryKey: ["backend-profile"] });
-      toast.success("Seller profile updated");
+      toast.success("Vendor profile updated");
     },
     onError: (error: Error) => toast.error(error.message),
   });
@@ -25,7 +25,7 @@ export default function SellerProfile() {
 
   return (
     <>
-      <p className="eyebrow">Seller account</p>
+      <p className="eyebrow">Vendor account</p>
       <h1 className="mt-2 font-serif text-5xl">Profile</h1>
       <form
         className="card mt-8 max-w-xl p-6"

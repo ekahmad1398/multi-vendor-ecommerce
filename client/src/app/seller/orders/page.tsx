@@ -30,7 +30,7 @@ export default function SellerOrders() {
   if (query.isLoading) return <div className="h-64 animate-pulse rounded-2xl bg-white" />;
   if (query.isError || !query.data) return <ErrorState onRetry={() => query.refetch()} />;
   if (!query.data.orders.length) {
-    return <EmptyState title="No seller orders yet" description="Orders containing your products will appear here." />;
+    return <EmptyState title="No vendor orders yet" description="Orders containing your products will appear here." />;
   }
 
   return (

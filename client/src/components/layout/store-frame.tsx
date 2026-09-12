@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 
 export function StoreFrame({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const workspace = path.startsWith("/admin") || path.startsWith("/seller");
+  const workspace = path.startsWith("/admin") || path.startsWith("/seller") || path.startsWith("/dashboard");
 
   if (workspace) return <>{children}</>;
 

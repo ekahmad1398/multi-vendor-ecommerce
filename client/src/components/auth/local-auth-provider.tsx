@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { getBackendProfile, logout as logoutRequest, type BackendUser } from "@/services/auth";
 
 type AuthState = {
@@ -16,19 +17,22 @@ const AuthContext = createContext<AuthState | null>(null);
 export function LocalAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<BackendUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   const refresh = useCallback(async () => {
     try {
       const account = await getBackendProfile();
       setUser(account);
+      queryClient.setQueryData(["backend-profile"], account);
       return account;
     } catch {
       setUser(null);
+      queryClient.removeQueries({ queryKey: ["backend-profile"] });
       return null;
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [queryClient]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => { void refresh(); }, 0);
@@ -36,8 +40,8 @@ export function LocalAuthProvider({ children }: { children: React.ReactNode }) {
   }, [refresh]);
 
   const signOut = useCallback(async () => {
-    try { await logoutRequest(); } finally { setUser(null); }
-  }, []);
+    try { await logoutRequest(); } finally { setUser(null); queryClient.removeQueries({ queryKey: ["backend-profile"] }); }
+  }, [queryClient]);
 
   const value = useMemo(() => ({ user, isLoading, isSignedIn: Boolean(user), refresh, signOut }), [user, isLoading, refresh, signOut]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
