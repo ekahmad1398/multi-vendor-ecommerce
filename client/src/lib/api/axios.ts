@@ -1,24 +1,29 @@
 import axios from "axios";
 
-// Service paths below are relative (for example, "/products"). Normalizing
-// here prevents a Vercel environment value containing only the host from
-// silently sending requests to non-existent root routes.
-const fallbackApiUrl = process.env.NODE_ENV === "production"
-  ? "https://multi-vendor-ecommerce-0k3w.onrender.com/api"
-  : "http://localhost:30001/api";
+// The HTTP-only cookie is the persistent browser session. Keep a copy of a
+// newly-issued token only in memory as a fallback for the current page session:
+// it lets the request immediately following login authenticate even if a
+// browser delays or blocks a cross-site cookie.
+let accessToken: string | null = null;
 
-const normalizeApiUrl = (value: string) => {
-  const baseUrl = value.replace(/\/+$/, "");
-  return new URL(baseUrl).pathname.replace(/\/+$/, "") === "/api" ? baseUrl : `${baseUrl}/api`;
+export const setAccessToken = (token: string | null) => {
+  accessToken = token;
 };
 
-const apiBaseUrl = normalizeApiUrl(process.env.NEXT_PUBLIC_API_URL ?? fallbackApiUrl);
-
 export const api = axios.create({
-  baseURL: apiBaseUrl,
+  // `next.config.ts` proxies this same-origin path to the configured backend.
+  // That keeps the httpOnly Local Auth cookie first-party in every browser.
+  baseURL: "/api",
   withCredentials: true,
   timeout: 15000,
   headers: { "Content-Type": "application/json" },
+});
+
+api.interceptors.request.use((config) => {
+  if (accessToken && !config.headers.Authorization) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
 });
 
 api.interceptors.response.use(

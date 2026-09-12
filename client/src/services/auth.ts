@@ -1,4 +1,4 @@
-import { api } from "@/lib/api/axios";
+import { api, setAccessToken } from "@/lib/api/axios";
 
 export type AppRole = "customer" | "vendor" | "admin";
 
@@ -12,11 +12,20 @@ export type BackendUser = {
   isEmailVerified?: boolean;
 };
 
+type LoginResponse = {
+  message: string;
+  token: string;
+  user: BackendUser;
+};
+
 export const getBackendProfile = async () =>
   (await api.get<{ user: BackendUser }>("/auth/profile")).data.user;
 
-export const login = async (email: string, password: string) =>
-  (await api.post<{ message: string; user: BackendUser }>("/auth/login", { email, password })).data;
+export const login = async (email: string, password: string) => {
+  const result = (await api.post<LoginResponse>("/auth/login", { email, password })).data;
+  setAccessToken(result.token);
+  return result;
+};
 
 export const register = async (name: string, email: string, password: string) =>
   (await api.post<{ message: string }>("/auth/register", { name, email, password })).data;
@@ -33,4 +42,10 @@ export const forgotPassword = async (email: string) =>
 export const resetPassword = async (email: string, otp: string, password: string) =>
   (await api.post<{ message: string }>("/auth/reset-password", { email, otp, password })).data;
 
-export const logout = async () => { await api.post("/auth/logout"); };
+export const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } finally {
+    setAccessToken(null);
+  }
+};
